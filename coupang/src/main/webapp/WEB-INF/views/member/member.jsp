@@ -70,7 +70,7 @@
                         <input type="email"  name="email" id="userEmail" placeholder="이메일">
                         <div id="emailCheck" class="waring"></div>
                         <div id="emailNum">
-                            <input type="text" placeholder="인증번호" disabled="disabled">
+                            <input type="text" class="emailOK" placeholder="인증번호" disabled>
                             <div class="emailBtn">인증번호 받기</div>
                         </div>
                         <div id="emailOkCheck" class="waring"></div>

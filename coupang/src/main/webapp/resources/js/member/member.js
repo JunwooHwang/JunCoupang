@@ -21,6 +21,8 @@ var nameOk = false;
 var emailOk = false;
 // 인증번호 확인
 var emailOkOk = false;
+//이메일전송 인증번호 저장위한 코드
+var code = "";                
 
 $(document).ready(function(){
 	$("#userId").blur(function(){
@@ -109,13 +111,54 @@ $(document).ready(function(){
 		}else if(!emailOk){
 			$("#userEmail").focus();
 			return false;
+		}else if(!emailOkOk){
+			$(".emailOK").focus();
+			return false;
 		}else{
 			return true;
+			
+		};
 		
-		}
 		
 		
-	})
+	});
+	
+	/* 인증번호 이메일 전송 */
+	$(".emailBtn").click(function(){
+		var email = $("#userEmail").val();        // 입력한 이메일
+		var checkBox = $(".emailOK");        	 // 인증번호 입력란
+		
+	    $.ajax({
+	        
+	        type:"GET",
+	        url:"mailCheck?email=" + email,
+	        success:function(data){
+	        	//console.log("data : " + data);
+	        	checkBox.attr("disabled",false);
+	        	code = data;
+	        }
+	                
+	    });
+	});
+	
+
+	 
+	/* 인증번호 비교 */
+	$(".emailOK").blur(function(){
+	    var inputCode = $(".emailOK").val();      // 입력코드    
+	    var checkResult = $("#emailOkCheck");    // 비교 결과 
+	    
+	    if(inputCode == code){                            // 일치할 경우
+	        checkResult.html("인증번호가 일치합니다.");
+	        emailOkOk = true;
+			$("#emailOkCheck").css("color", "green");      
+	    } else {                                            // 일치하지 않을 경우
+	        checkResult.html("인증번호를 다시 확인해주세요.");
+	        $("#emailOkCheck").css("color", "red");
+	        emailOkOk = false;
+	    }  
+	    
+	});
 	
 	
 }) //ready 끝지점
