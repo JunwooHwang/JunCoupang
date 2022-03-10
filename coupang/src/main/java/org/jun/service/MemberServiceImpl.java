@@ -20,4 +20,13 @@ public class MemberServiceImpl implements MemberService {
 	public int idOver(MemberDTO mdto) {
 		return mmapper.idOver(mdto);
 	}
+	
+	// 로그인
+	public MemberDTO login(MemberDTO mdto) {
+		return mmapper.login(mdto);
+	}
+	// 아이디 비밀번호 확인
+	public int idpwChk(MemberDTO mdto) {
+		return mmapper.idpwChk(mdto);
+	}
 }

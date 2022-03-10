@@ -3,6 +3,7 @@ package org.jun.controller;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpSession;
 
 import org.jun.domain.MemberDTO;
 import org.jun.service.MemberService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,17 +24,20 @@ public class MemberController {
     @Autowired
     private JavaMailSender mailSender;
 	
+    // 회원가입
 	@GetMapping("member")
 	public String member() {
 		return "member/member";
 	}
 	
+	// 회원가입 성공
 	@PostMapping("member")
 	public String member(MemberDTO mdto) {
 		mservice.insert(mdto);
 		return "redirect:/";
 	}
 	
+	// 아이디 중복
 	@ResponseBody
 	@PostMapping("memberAjax")
 	public int memberAjax(MemberDTO mdto){
@@ -82,5 +87,44 @@ public class MemberController {
         String num = Integer.toString(checkNum);
         return num;
     }
+	
+	// 로그인
+	@GetMapping("login")
+	public String login() {
+		System.out.println("Get login 실행");
+		return "member/login";
+	}
+	
+	// 로그인 성공
+	@ResponseBody
+	@PostMapping("login")
+	public int loginAjax(MemberDTO mdto,HttpSession session) {
+		System.out.println("Post login 실행");
+		int result = mservice.idpwChk(mdto);
+		if(result == 1) {
+			MemberDTO login= mservice.login(mdto);
+			session.setAttribute("login", login); //로그아웃이나 웹브라우저를 닫지않는이상 데이터가 사라지지 않는다
+			return result;
+		}else { 
+			return result;
+		}
+	}
+	
+	// 로그아웃
+	@GetMapping("logout")  // 웹브라우저를 분석해주는 역할
+	public String logout(HttpSession session) {
+	   System.out.println("logout 실행됨");
+	   session.invalidate();
+	   return "redirect:/";
+	}
+	
+	// 아이디찾기
+	@GetMapping("idSearch")
+	public String idSearch(Model model) {
+		int result = 0;
+		System.out.println("idSearch 실행됨 " + result);
+    	model.addAttribute("idResult",result);
+		return "member/idSearch";
+	}
 	
 }
