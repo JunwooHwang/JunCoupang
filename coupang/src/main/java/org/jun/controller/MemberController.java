@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -118,13 +117,21 @@ public class MemberController {
 	   return "redirect:/";
 	}
 	
-	// 아이디찾기
-	@GetMapping("idSearch")
-	public String idSearch(Model model) {
-		int result = 0;
-		System.out.println("idSearch 실행됨 " + result);
-    	model.addAttribute("idResult",result);
-		return "member/idSearch";
+	// 아이디,비밀번호 찾기
+	@GetMapping("Search")
+	public String Search() {
+		System.out.println("get Search 실행됨");
+
+
+		return "member/Search";
+	}
+	
+	// 아이디,비밀번호 찾기 눌렀을때
+	@PostMapping("Search")
+	public String Search(MemberDTO mdto) {
+		System.out.println("post Search 실행됨");
+
+		return "member/Search";
 	}
 	
 }

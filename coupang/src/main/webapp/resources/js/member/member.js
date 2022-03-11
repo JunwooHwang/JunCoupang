@@ -128,17 +128,23 @@ $(document).ready(function(){
 		var email = $("#userEmail").val();        // 입력한 이메일
 		var checkBox = $(".emailOK");        	 // 인증번호 입력란
 		
-	    $.ajax({
-	        
-	        type:"GET",
-	        url:"mailCheck?email=" + email,
-	        success:function(data){
-	        	//console.log("data : " + data);
-	        	checkBox.attr("disabled",false);
-	        	code = data;
-	        }
-	                
-	    });
+		if(!emailOk){
+			$("#userEmail").focus();
+			return false;
+		}else{
+			$.ajax({
+				
+				type:"GET",
+				url:"mailCheck?email=" + email,
+				success:function(data){
+					//console.log("data : " + data);
+					checkBox.attr("disabled",false);
+					code = data;
+				}
+			
+			});
+			
+		}
 	});
 	
 

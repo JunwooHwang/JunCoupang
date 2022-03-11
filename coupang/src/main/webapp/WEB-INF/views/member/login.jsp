@@ -47,10 +47,10 @@
 	            </div>
 	          	<div class="UtillR">
 					<div class="idSearch">
-						<label class="idBtn"><a href="/idSearch">아이디 찾기</a></label>
+						<label class="idBtn"><a href="/Search">아이디 찾기</a></label>
 					</div>
 					<div class="pwSearch">
-						<label class="pwBtn"><a href="/pwSearch">비밀번호 찾기</a></label>
+						<label class="pwBtn"><a href="/Search">비밀번호 찾기</a></label>
 					</div>
 	          	</div>	          	
             </div>
